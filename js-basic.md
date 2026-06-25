@@ -536,6 +536,171 @@ Zauważmy, że w danych wyjściowych mamy jeden dziwny wiersz — dla zmiennej t
 
 ---
 
+### 2. Konwersja typu danych
+
+Zmienna w JavaScripcie może zmienić typ. Czasami JavaScript robi to **automatycznie** (niejawnie). Zastanówmy się, jaki będzie wynik wykonania poniższego kodu:
+
+```js
+let nr1 = 2;
+let nr2 = "2";
+
+console.log(nr1 * nr2);
+```
+
+Próbujemy tu pomnożyć zmienną typu `Number` ze zmienną typu `String`. W przeciwieństwie do innych języków programowania, JavaScript **nie zgłosi tu błędu** — będzie próbował skonwertować wartość tekstową na liczbę. Jeśli to się uda, kod zostanie wykonany bez problemów, a `console.log()` wyświetli w konsoli wartość:
+
+```
+4
+```
+
+**Jednak taki kod jest niebezpieczny!** Zobaczmy, jaki będzie wynik bardzo podobnie wyglądającego przykładu:
+
+```js
+let nr1 = 2;
+let nr2 = "2";
+
+console.log(nr1 + nr2);
+```
+
+Wynikiem będzie:
+
+```
+22
+```
+
+Znak `+` służy do **konkatenacji** ciągów tekstowych. Dlatego w tym przykładzie, zamiast konwertować wartość tekstową na liczbę, JavaScript przeprowadza konwersję **liczby na ciąg tekstowy**, a następnie łączy obie wartości — sklejenie `"2"` i `"2"` daje w wyniku `"22"`.
+
+> To jest dokładnie ta "pułapka konkatenacji", o której już wspominałem — `*` i `+` zachowują się różnie w kontakcie z mieszanymi typami: `*` zawsze próbuje matematyki (konwertuje string na liczbę), a `+` przy mieszanych typach woli konkatenację (konwertuje liczbę na string).
+
+Na szczęście nie trzeba polegać na niejawnej (automatycznej) konwersji JavaScriptu — istnieją **wbudowane funkcje**, które można wykorzystać do **jawnej** (świadomej, kontrolowanej) konwersji typu zmiennej.
+
+#### Trzy metody konwersji: `String()`, `Number()`, `Boolean()`
+
+- **`String()`** — konwertuje zmienną na typ `String` (przyjmuje dowolną wartość, także `undefined` i `null`, a następnie "ujmuje ją w cudzysłów", czyli zwraca jako tekst).
+- **`Number()`** — próbuje skonwertować zmienną na liczbę. Jeśli nie da się tego zrobić logicznie, wartością wynikową będzie `NaN` (z ang. *Not a Number*, czyli "to nie liczba").
+- **`Boolean()`** — konwertuje zmienną na wartość boolowską. Wynikiem będzie `true` dla **wszystkich** wartości, **poza**: `null`, `undefined`, `0` (zero), pusty ciąg tekstowy `""` i `NaN`.
+
+**Przykład tych metod w akcji:**
+
+```js
+let nrToStr = 6;
+nrToStr = String(nrToStr);
+console.log(nrToStr, typeof nrToStr);
+
+let strToNr = "12";
+strToNr = Number(strToNr);
+console.log(strToNr, typeof strToNr);
+
+let strToBool = "każdy ciąg tekstowy to wartość true";
+strToBool = Boolean(strToBool);
+console.log(strToBool, typeof strToBool);
+```
+
+Po uruchomieniu powyższego kodu nastąpi wygenerowanie następujących danych wyjściowych:
+
+```
+6 string
+12 number
+true boolean
+```
+
+Wydaje się to całkiem proste — ale nie każda konwersja kończy się tak przewidywalnym wynikiem.
+
+#### Przypadki specjalne — `null` i pusty string konwertowane na liczbę
+
+```js
+let nullToNr = null;
+nullToNr = Number(nullToNr);
+console.log("null", nullToNr, typeof nullToNr);
+
+let emptyToNr = "";
+emptyToNr = Number(emptyToNr);
+console.log("pusty ciąg tekstowy", emptyToNr, typeof emptyToNr);
+```
+
+Powyższe fragmenty kodu wygenerują następujące dane wyjściowe:
+
+```
+null 0 number
+pusty ciąg tekstowy 0 number
+```
+
+Widzimy, że wynikiem konwersji **pustego ciągu tekstowego** i wartości **`null`** na liczbę jest `0`. To wybór dokonany przez twórców JavaScript — warto o nim wiedzieć. Przydaje się np. gdy chcemy skonwertować ciąg tekstowy na `0`, jeśli jest on pusty lub ma wartość `null`.
+
+#### Kiedy konwersja na liczbę się nie udaje — `NaN`
+
+```js
+let strToNr2 = "witaj";
+strToNr2 = Number(strToNr2);
+console.log(strToNr2, typeof strToNr2);
+```
+
+Dane wyjściowe tego fragmentu kodu:
+
+```
+NaN number
+```
+
+> **Ciekawostka:** `typeof NaN` to `"number"` — `NaN` jest, paradoksalnie, traktowany jako wartość *typu* liczbowego, mimo że dosłownie oznacza "to nie liczba". To jeszcze jedna mała pułapka warta zapamiętania, podobna do `typeof null` zwracającego `"object"`.
+
+Dane te potwierdzają, że jeśli wartość tekstowa **nie może** zostać logicznie skonwertowana na liczbę, w wyniku konwersji otrzymujemy `NaN`.
+
+#### Konwersja stringów na Boolean — częsta pułapka
+
+```js
+let strToBool2 = "false";
+strToBool2 = Boolean(strToBool2);
+console.log(strToBool2, typeof strToBool2);
+
+let emptyToBool = "";
+emptyToBool = Boolean(emptyToBool);
+console.log(emptyToBool, typeof emptyToBool);
+```
+
+Wygenerowane zostaną następujące dane wyjściowe:
+
+```
+true boolean
+false boolean
+```
+
+> **Uwaga, to jest nieintuicyjne!** Ciąg tekstowy `"false"` (czyli **słowo** "false" jako tekst) po konwersji na `Boolean` daje `true`! Dlaczego? Bo `Boolean()` nie "czyta" treści stringa — sprawdza tylko, czy string jest **pusty czy nie**. A `"false"` to niepusty string (ma 5 znaków), więc konwertuje się na `true`.
+
+Ten przykład pokazuje, że **każdy niepusty** ciąg tekstowy konwertowany na wartość boolowską otrzymuje wartość `true` — to dotyczy nawet ciągu tekstowego `"false"`. Tylko **pusty ciąg** (`""`) oraz wartości `null` i `undefined` przyjmą wartość boolowską `false`.
+
+#### Łączenie niejawnej i jawnej konwersji — naprawienie przykładu z konkatenacją
+
+Wróćmy do przykładu z samego początku tej sekcji:
+
+```js
+let nr1 = 2;
+let nr2 = "2";
+
+console.log(nr1 + Number(nr2));
+```
+
+Konsola wygeneruje wynik:
+
+```
+4
+```
+
+Ponieważ ciąg tekstowy jest **najpierw jawnie konwertowany** na liczbę (przez `Number(nr2)`), a dopiero później przeprowadzana jest operacja `+`. Dlatego w tym miejscu zachodzi operacja matematyczna, a nie konkatenacja ciągu tekstowego — **kontrolujemy** to sami, zamiast zdawać się na niejawne (automatyczne) zachowanie JS.
+
+#### Ćwiczenie praktyczne (z książki)
+
+Jakie są typy poniższych zmiennych? Sprawdź to za pomocą `typeof` i wyświetl wyniki w konsoli:
+
+```js
+let str1 = 'Laurence';
+let str2 = "Svekis";
+let val1 = undefined;
+let val2 = null;
+let myNum = 1000;
+```
+
+---
+
 ## Pytania / niejasności
 
 - *(miejsce na rzeczy, które chcę jeszcze dopytać)*
@@ -590,5 +755,7 @@ Niektóre przykłady w książce pomijają `let`/`const` przy pierwszym użyciu 
 - [ ] Porównać `===` dla dwóch identycznych stringów i dla dwóch `Symbol()` z tym samym opisem — zobaczyć różnicę (`true` vs `false`)
 - [ ] Sprawdzić, czy zmienna niezainicjowana (`let x;`) i zmienna z jawnie przypisanym `undefined` są sobie równe przez `===`
 - [ ] Napisać `typeof` dla wszystkich 7 prostych typów danych w jednym pliku i porównać z tabelką z notatek
-
-2.
+- [ ] Sprawdzić `console.log(2 * "2")` i `console.log(2 + "2")` w jednym pliku, porównać wyniki i typy (`typeof`)
+- [ ] Skonwertować `null`, `""` (pusty string) i `"witaj"` przez `Number()`, porównać wyniki — kiedy daje `0`, a kiedy `NaN`
+- [ ] Skonwertować string `"false"` przez `Boolean()` i zweryfikować, że wynikiem jest `true` (pułapka!)
+- [ ] Rozwiązać ćwiczenie z książki: sprawdzić `typeof` dla `str1`, `str2`, `val1`, `val2`, `myNum`
