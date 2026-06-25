@@ -324,7 +324,256 @@ Uncaught TypeError: Cannot mix BigInt and other types, use explicit conversions.
 
 ---
 
+## 8. Boolean
+
+`Boolean` jest typem danych, który może przechowywać tylko dwie wartości: `true` i `false`. Ten typ danych bardzo często znajduje zastosowanie w kodzie, szczególnie w wyrażeniach, w których wynikiem musi być wartość logiczna.
+
+```js
+let bool1 = false;
+let bool2 = true;
+```
+
+Powyższy przykład pokazuje wykorzystanie typu boolowskiego — wartości `true`/`false` mogą reprezentować np. tak/nie, włączony/wyłączony.
+
+Przykład takiej sytuacji — wskazanie, czy obiekt został usunięty:
+
+```js
+let objectIsDeleted = false;
+```
+
+Inny przykład — czy światło jest włączone:
+
+```js
+let lightIsOn = true;
+```
+
+W omawianych przykładach: pierwsza zmienna wskazuje, że obiekt **nie** został usunięty, a druga — że światło **jest** włączone.
+
+---
+
+## 9. Symbol
+
+Jest to zupełnie nowy typ danych, wprowadzony w specyfikacji **ES6** (ECMAScript 6). `Symbol` możemy wykorzystać w sytuacji, gdy ważne jest, aby dwie zmienne **nie były takie same**, nawet jeśli mają ten sam typ i wartość (opis tekstowy).
+
+Poniżej deklaracje ciągów tekstowych i symboli (wszystkie mają tę samą wartość/opis):
+
+```js
+let str1 = "JavaScript to świetny język programowania!";
+let str2 = "JavaScript to świetny język programowania!";
+console.log("Te dwa ciągi tekstowe są takie same:", str1 === str2);
+
+let sym1 = Symbol("JavaScript to świetny język programowania!");
+let sym2 = Symbol("JavaScript to świetny język programowania!");
+console.log("Te dwa obiekty Symbol są takie same:", sym1 === sym2);
+```
+
+Ten fragment kodu generuje następujące dane wyjściowe:
+
+```
+Te dwa ciągi tekstowe są takie same: true
+Te dwa obiekty Symbol są takie same: false
+```
+
+W pierwszej części kodu JavaScript uznaje, że oba ciągi tekstowe są takie same (mają tę samą wartość i typ).
+
+> **Ważne!** W drugiej części kodu poszczególne symbole są unikatowe — pomimo tego, że zawierają ten sam ciąg tekstowy (opis), to nie są takie same, czego efektem jest wygenerowanie wartości `false`. **Każde** wywołanie `Symbol(...)` tworzy zupełnie nowy, unikalny obiekt — opis tekstowy jest tylko etykietką do czytania, nie wpływa na "tożsamość" Symbolu.
+
+Ten typ danych jest bardzo użyteczny przy obsłudze właściwości obiektów (np. jako unikalny klucz, który nigdy nie "zderzy się" z innym).
+
+---
+
+## 10. Undefined
+
+JavaScript posiada specjalny typ danych przeznaczony dla zmiennej, której **nie została przypisana żadna wartość**. Ten typ danych określany jest mianem `undefined`.
+
+Przykład:
+
+```js
+let unassigned;
+console.log(unassigned);
+```
+
+Powyższy przykład spowoduje wygenerowanie następujących danych wyjściowych:
+
+```
+undefined
+```
+
+Wartość tego typu może być też przypisana **wyraźnie** — ale jest to uznawane za **bardzo złą praktykę**:
+
+```js
+let terribleThingToDo = undefined;
+```
+
+### Dlaczego to jest złą praktyką?
+
+Pomimo że jest to wykonalne, jest to mocno odradzane, z wielu powodów. Jednym z nich jest sprawdzanie, czy dwie zmienne są takie same. Jeżeli jedna zmienna **nie została zdefiniowana** (czyli jest `undefined` automatycznie), a druga ma **wyraźnie przypisaną** wartość `undefined`, to zostaną one uznane za **takie same** (`===` da `true`).
+
+To rodzi problem — jeśli celem porównania jest sprawdzenie, czy dwie zmienne są **rzeczywiście** równe (mają tę samą, sensowną wartość), a nie tylko to, że obie są "niezdefiniowane".
+
+**Przykład:** jeśli zmienna przeznaczona na imię zwierzęcia i zmienna przeznaczona na nazwę użytkownika będą **obie** typu `undefined`, JS uzna je za takie same — pomimo że tym zmiennym nie przypisano żadnych sensownych wartości, i logicznie nie powinny być traktowane jako "równe".
+
+---
+
+## 11. Null
+
+Ten typ danych jest wartością specjalną, wskazującą, że zmienna jest **pusta** lub ma **nieznaną wartość**. Wielkość liter ma przy nim znaczenie — zapisujemy go małymi literami:
+
+```js
+let empty = null;
+```
+
+Jeśli rozwiązujemy problem związany z napotkaniem zmiennej o wartości `undefined` (opisany w sekcji powyżej), przypisanie jej wartości `null` pozwala wyeliminować ten problem.
+
+To jeden z powodów, dla których lepszym rozwiązaniem jest przypisanie wartości `null` zmiennej, która ma pozostać pusta/niewiadoma — zamiast jawnie przypisywać jej `undefined`.
+
+**Przykład:**
+
+```js
+let terribleThingToDo = undefined;
+let lastName;
+console.log("Jedna zmienna jest typu undefined:", lastName === terribleThingToDo);
+
+let betterOption = null;
+console.log("Jedna zmienna jest typu null:", lastName === betterOption);
+```
+
+Powyższy kod wygeneruje następujące dane wyjściowe:
+
+```
+Jedna zmienna jest typu undefined: true
+Jedna zmienna jest typu null: false
+```
+
+Ten przykład pokazuje, że automatycznie niezainicjowana zmienna (`lastName`) i zmienna, której wyraźnie przypisano wartość `undefined` (`terribleThingToDo`), są uznawane za takie same — co może być problematyczne. Natomiast zmienne `lastName` i `betterOption` (wyraźnie zdefiniowana jako `null`) **nie** są uznane za równe — co automatycznie eliminuje ten problem.
+
+---
+
+## 12. Analizowanie i modyfikowanie typów danych
+
+Mając omówione wszystkie proste typy danych, czas na kolejną, ściśle powiązaną wiedzę. JavaScript posiada **wbudowane metody**, pomagające w pracy z prostymi typami danych — możemy z nich korzystać bez konieczności pisania własnej logiki od zera.
+
+Jedną z takich wbudowanych metod już znamy i używamy:
+
+```js
+console.log()
+```
+
+Istnieje wiele metod wbudowanych, poznamy tu tylko wybrane:
+
+1. Ustalenie typu zmiennej
+2. Konwersja typu danych
+3. Operatory:
+   - a) operatory arytmetyczne
+   - b) operatory jednoargumentowe — inkrementacja i dekrementacja
+   - c) operatory prefiks i postfiks
+   - d) łączenie operatorów
+   - e) operatory przypisania
+   - f) operatory porównania
+   - g) operatory większy niż / mniejszy niż
+   - h) operatory logiczne
+
+### 1. Ustalenie typu zmiennej — operator `typeof`
+
+Ustalenie typu zmiennej może być trudne, szczególnie w przypadku wartości `null` i `undefined`. Na szczęście mamy na to rozwiązanie w postaci operatora `typeof`, którego wartością zwrotną jest typ danej zmiennej.
+
+Możemy go użyć z nazwą zmiennej oddzieloną spacją, albo umieszczoną w nawiasie okrągłym — obie formy są równoważne.
+
+**Przykład wykorzystania:**
+
+```js
+let testVariable = 1;
+let variableTypeTest1 = typeof testVariable;
+let variableTypeTest2 = typeof(testVariable);
+
+console.log(variableTypeTest1);
+console.log(variableTypeTest2);
+
+// pamiętać o literówkach — JS jest ściśle restrykcyjny co do wielkości liter (case-sensitive)
+```
+
+W wyniku wywołania, dla obu przypadków otrzymamy `"number"`. Nawias nie jest wymagany, ale jego użycie to dobra praktyka — bywa bardziej czytelne.
+
+### Kolejny przykład — `typeof` w akcji, na wszystkich typach prostych
+
+```js
+let str = "Witaj!";
+let nr = 7;
+let bigNr = 12345678901234n;
+let bool = true;
+let sym = Symbol("unikatowy");
+let undef = undefined;
+let unknown = null;
+
+console.log("str", typeof str);
+console.log("nr", typeof nr);
+console.log("bigNr", typeof bigNr);
+console.log("bool", typeof bool);
+console.log("sym", typeof sym);
+console.log("undef", typeof undef);
+console.log("unknown", typeof unknown);
+```
+
+`console.log` wyświetla najpierw nazwę zmiennej (jako ciąg tekstowy zdefiniowany za pomocą cudzysłowu), a potem jej typ, ustalony za pomocą `typeof`.
+
+**Wygenerowany wynik:**
+
+```
+str string
+nr number
+bigNr bigint
+bool boolean
+sym symbol
+undef undefined
+unknown object
+```
+
+### Ciekawostka / pułapka: `typeof null`
+
+Zauważmy, że w danych wyjściowych mamy jeden dziwny wiersz — dla zmiennej typu `null` wynik to `"object"`. Skoro mamy do czynienia z **prostym typem**, a nie obiektem, to wygląda na błąd — i faktycznie jest to dobrze znany, **historyczny błąd** w samym języku JavaScript.
+
+> Błąd istnieje od bardzo dawna, ale nie został usunięty, aby nie powodować problemów ze **wsteczną zgodnością** (naprawienie tego mogłoby zepsuć ogromną ilość istniejącego kodu na świecie, który już na ten błąd "liczy"). Nie wpływa to negatywnie na działanie programów — ważne jest tylko, żeby wiedzieć, że ta anomalia istnieje, i nie dać się jej zaskoczyć.
+
+---
+
+## Pytania / niejasności
+
 - *(miejsce na rzeczy, które chcę jeszcze dopytać)*
+
+---
+
+## Wnioski praktyczne (z testowania kodu)
+
+### O literówkach i błędach w materiałach
+
+Książki i kursy do nauki — nawet renomowane — czasem zawierają literówki w przykładach kodu (np. błędny ukośnik, brak spacji w nazwie zmiennej, niekonsekwentna wielkość liter). To się zdarza i nie jest oznaką, że "czegoś nie rozumiem" — to błąd w materiale.
+
+**Najlepsza obrona przed tym:** zawsze testować kod samodzielnie w `node` / konsoli, a nie tylko wierzyć tekstowi. Jeśli coś nie działa zgodnie z opisem, to dobry sygnał do sprawdzenia, czy to literówka, czy faktycznie czegoś nie rozumiem.
+
+### Częste przyczyny błędu `ReferenceError: X is not defined`
+
+1. **Literówka w nazwie zmiennej** — np. `variableTypetest2` (małe `t`) vs `variableTypeTest2` (wielkie `T`). JavaScript jest **case-sensitive** — różnica jednej litery to dla niego dwie zupełnie różne nazwy.
+2. Zmienna nie została zadeklarowana wcale, zanim próbuję jej użyć.
+3. Zmienna jest zadeklarowana **niżej** w pliku niż linia, w której próbuję jej użyć (JS czyta kod od góry do dołu).
+
+### Workflow przy testowaniu kodu w `node`
+
+1. Napisz/popraw kod w pliku.
+2. **Zapisz plik (Ctrl+S)** — bez tego `node` uruchomi starą wersję pliku! Łatwo o tym zapomnieć na początku.
+3. Uruchom `node nazwa-pliku.js` w terminalu.
+4. Jeśli błąd — przeczytaj uważnie komunikat (nazwa błędu + numer linii), to zwykle wskazuje **dokładnie**, co jest nie tak.
+
+### O `let`/`const` w przykładach z książki
+
+Niektóre przykłady w książce pomijają `let`/`const` przy pierwszym użyciu zmiennej (np. `testVariable = 1;` bez słowa kluczowego). To "działa" technicznie (tworzy niejawną zmienną globalną), ale jest **złą praktyką** — w trybie `'use strict'` (używanym w prawdziwych projektach, np. w moim projekcie pizzerii) taki kod wywoła błąd.
+
+**Zasada na przyszłość:** zawsze pisać `let`/`const` przy pierwszej deklaracji zmiennej, nawet jeśli przykład w książce tego nie robi.
+
+### O `'use strict'`
+
+- **Krótkie ćwiczenia/testy do nauki** → niepotrzebny, mogę pisać bez niego.
+- **Prawdziwy, większy projekt** → dobra praktyka, dodawać na górze plików JS.
+- Klasy (`class`) i moduły ES (`import`/`export`) automatycznie włączają strict mode od wewnątrz, nawet bez wpisania `'use strict'` wprost.
 
 ---
 
@@ -337,3 +586,9 @@ Uncaught TypeError: Cannot mix BigInt and other types, use explicit conversions.
 - [ ] Sprawdzić w konsoli `console.log(Number.MAX_SAFE_INTEGER)` i `Number.MIN_SAFE_INTEGER`
 - [ ] Spróbować dodać do siebie wartość `Number` i `BigInt` bez konwersji — zobaczyć błąd na własne oczy
 - [ ] Zapisać tę samą liczbę w postaci dziesiętnej, binarnej (`0b`) i szesnastkowej (`0x`), porównać w konsoli
+- [ ] Sprawdzić `typeof null` na własne oczy i zapamiętać, że to znany "błąd historyczny" (`object`, nie `null`)
+- [ ] Porównać `===` dla dwóch identycznych stringów i dla dwóch `Symbol()` z tym samym opisem — zobaczyć różnicę (`true` vs `false`)
+- [ ] Sprawdzić, czy zmienna niezainicjowana (`let x;`) i zmienna z jawnie przypisanym `undefined` są sobie równe przez `===`
+- [ ] Napisać `typeof` dla wszystkich 7 prostych typów danych w jednym pliku i porównać z tabelką z notatek
+
+2.
