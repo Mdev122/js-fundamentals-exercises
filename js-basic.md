@@ -759,3 +759,60 @@ Niektóre przykłady w książce pomijają `let`/`const` przy pierwszym użyciu 
 - [ ] Skonwertować `null`, `""` (pusty string) i `"witaj"` przez `Number()`, porównać wyniki — kiedy daje `0`, a kiedy `NaN`
 - [ ] Skonwertować string `"false"` przez `Boolean()` i zweryfikować, że wynikiem jest `true` (pułapka!)
 - [ ] Rozwiązać ćwiczenie z książki: sprawdzić `typeof` dla `str1`, `str2`, `val1`, `val2`, `myNum`
+
+3.
+Operatory
+Zapoznawszy się z całkiem spora liczbą typów danych i wybranych sposobów ich konwersji warto zgłębić kolejny ważny element JavaScript "Operatory".
+Są bardzo przydatne gdy trzeba pracować ze zmiennymi,modyfikować je przeprowaddzać obliczenia z ich użyciem a także porównywać je.Nazwa operator wzięła się staąd,że elemety są używane do przeprowadzania operacji z wykorzystaniem zmiennych.
+a.)Operatory arytmetyczne
+mogą byc używane do przeprowadznia operacji na liczbach.Większośc tych operacji jest naturalna poniewąż przedstawia podstawowe operacyje matemtyczne z któymi masz styczność na co dzień.
+- Dodawanie:
+bardzo prosta operacja w JavaScripcie do której używamy opratora + .
+przykłąd:
+let nr1 = 12;
+let n32 = 14;
+let result1 = nr1 + nr2;
+
+Operator plus jest także stosowany do kokonkatenacji ciągów tekstowych.Należy zwrócić uwagę na spację po słowie Operacja dzięki której mamy pewność ze w wyniku również tą spację zobaczymy.
+przykład:
+let str1 = "Operacja ";
+let str2 = "dodawania";
+let result2 = str1 + str2;
+Zostaną wygenerowane następujące dane wyjściowe dlatych fragmentów kodu:
+dla pierwszego 
+26
+dla drugiego
+Operacja dodawania
+Dodawanie wartości liczbowych i tekstowych daje różne wyniki.Próba dodania dwoch ciągów tekstowych prowadzi do ich konkatenacji na postac pojedyńczego ciągu tekstowego.
+
+Cwiczenie praktyczne
+Utwórz zmienną  przeznaczoną do przechowywania Twojego imienia,następną do przechowywania wieku i kolejną wskazującą czy potyrafisz programować w JavaScripcie.
+W konsoli wyświetl następujące zdanie:
+Witaj, mam na imię Maaike, mam 29 lat i potrafie programować w JavaScript: true.
+
+b.)Odejmowanie
+działą z godnie zoczekiwaniami.Do hego przeprowadzenia  używamy operatora - .
+Ciekawe jaki wynik da poniższy przykład:
+let nr1 = 20;
+let nr2 = 4;
+let str1 = "Cześć";
+letnr3 = 3;
+let result1 = nr1 - nr2;
+let result2 = str1 - nr3;
+console.log(result1, result2);
+
+Pierwsza wygenerowana wartość to 16 ale druga to Nan,Dlaczeggo?Dlatego ponieważ różnica liczby i cięgu tekstowego nie jest liczbą i co ciekawe nei wygenerował się bład w w Java script.
+
+c.)Mnożenie
+Iloczyn dwóch wartości liczbowych otrzymujemy po użyciu opratora *.W przeciwieństwie dop innych języków programowabnia w JavaScript nie możemy mnożyć liczby i ciągu tekstowego wynikiemj takiej operacji byłby Nan.
+Przykład:
+let nr1 = 15;
+let nr2 = 10;
+let srt 1 = "Cześć";
+let nr 3 = 3;
+let result 1 = nr1 * nr2;
+let result2 = str1 * nr 3;
+console.log(ressult1, result 2);
+
+powyższy fragmet kodu wygeneruje następujące dane wyjściowe:
+150 NaN
