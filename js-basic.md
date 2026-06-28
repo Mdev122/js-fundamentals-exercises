@@ -209,3 +209,64 @@ Przy przepisywaniu tej sekcji wystąpiło kilka powtarzających się typów lite
 | Niedomknięty backtick (zamknięty innym znakiem) | `` `${a}'); `` | `` `${a}`); `` | string się "nie zamyka", reszta kodu jest źle interpretowana |
 
 **Wniosek:** najlepszą obroną przed takimi błędami jest zawsze samodzielne testowanie kodu (np. w `node` lub konsoli), a nie tylko czytanie przykładu w materiałach — nawet sprawdzone książki i kursy zawierają literówki.
+
+g.)Operatory jednoargumentowe- inkrementacja i dekrementacja
+
+Te dwa operatory arytmetyczne to zarówno dla osób operująych na innych ejzykach oprogramowania jak i  ucacych się od podstaw JavaScrptu abosultn nowość.Pojęcviem używanym wkontekscie ich używania jest operand.Operator przeprowadza działąnia na operandach więc w przypadku opreacji x +y operandami są x oraz y.Podczas inkrementacjki i dekrementacji potrzebny jest tylko jeden operand dlatego nazywa się jednoargumentowymi.
+Jeśli widzsz zapis w postaci x++ to odczytujesz go jako x = x+1 (operattor inkrementacji) jeśli chodzi o operator dekrementacji możęmy go odczytać jako x-- jako x = x-1
+Przyklad inkrementacji i dekrementacji:
+
+let nr1 = 4;
+nr1++;
+console.log(nr1);
+
+let nr2 = 4;
+nr2--;
+console.log(nr2);
+
+Wygenerowane wyniki to 5 i  3.
+
+h.) Operatory prefix i postfix
+Operator inkremntacji może znajdować się po operandzie x++ i ejst wówczas nazywany operatorem jednoargumentowym typu postfix ale ten operator może być również umieszczony przed operandem ++x i jest wtedy nazywany operatorem jednoargumentowym typu prefix.Brzmi skomplikowanie:) i działąnie tych operatorów jest odmienne ale analiza kodu i cierpliwe rozsadne podejscie powinno nam tu pomóc.
+Operator postfix jest wykonywany po przekazaniu zmiennej a tym smaym po przeprowadzeniu operacji.W omawianym przykłądzie zmienna nr jest inkrementowana o 1 już po użyciu jej do wyświetlenia wartośći.Pierwsze wywołanie console.log wyświetla starą wartość zmiennej nr ponieważ nie zostałą ona jeszce uaktualniona natomaist drugie wywołanie console log wyświetla uaktualnioną wartość zmiennej.
+
+let nr 2 =2;
+console.log(nr2++);
+console.log(nr);
+Ten fragment kody wygneruje następujące dane wyjściowe:
+2
+3
+
+Z kolei operator prefix jest wykonywany przed przekazaniem zmiennej przy czym taka potzreba często się pojawia.Spójrzmy na kolejny przykład:
+let nr2 = 2;
+console.log(++nr);
+Ten fragment kodu wygeneruje
+3
+Ok sprawdzimy czy rozumiemy zagadnienie:
+let nr1 =4;
+let nr2 =t;
+let nr3 =2;
+console.log(nr1++ + ++nr2 * nr3++);
+Wynikiem wykonania tego kodu ejst 16.
+najpierw jest przeoprowadzone mnożenie zgodnie ze stosowaną w matematyce kolejnoscią działąń.Do mnoże nia użyto wartości 6 ale ponieważ mamy użyty prefix i inkrementację wartości 5 któa odbywa się przed mnożeniem 2 z postfix inkrementacja następuje tuz po mnozeniui nie ma wpływu an bieżace obliczenia.Nr 1 to postfix i zostanie wykonany po dodawaniu.Dlatego suma 12 i 4 daje wynik 16.
+
+i.)Łączenie operatorów
+Operatory mogą być łączone i działąją tak samo jak w matematyce.Są wykonywane z godznie zkolejnością działań a nie od lewego do prawego.To zpowodu fenomenu nazwanego pierwszeńśtwem operatorow.
+Jest jeszce jedna istotna kwestia tzw grupowanie (...) d któego jest używany anwias okrągły.Operacje znajdujace się w nasiasie mają pierwszeńswo.Kolejność operacji jest ustalana na zasadzie jej typu(najpierw ta która ma pierwszeństwo).jeżeli operacje są równorzęne zostaną wykonane od lewej do prawej.
+tabela  pierwszeństwa operacji:
+
+Operacja        Symbol       Przykład
+Grupowanie      (...)        (x + y)
+Potęgowanie      **          x ** y
+Ikrementacja i
+dekrementacja
+prefix           --,++       --x, ++y
+Mnożenie,        *,/,%       x * y, x / y, x % y 
+dzielenie
+reszta z
+dzielenia
+Dodawanie i
+odejmowanie      +, -          x + y, x - y
+
+Zadanie:
+Ok mam zadanie  utworz kod przez naczony do obliczenia przeciwprostokątnej trójkta  uzywając do tego twierdzenia pitagorasa i długości dwóch pozostałych boków trójkta.Zgodnie ztwierdzeniem pitagorasa  związek między bokami  trójkata prostokątnego można wyrazic jako a**2 + b**2  =  c **2.Twierdzenie Pitagorasa ma zastosowanie tylko dla trójkąta prostokątnego.Boki połaczone kątem 90 stopni są nazywane przyprostokątnymi,we wzorze są one oznaczone jako a i b.natomaist najdłuższy i niepołączony z kątem prostym bok to przeciwprostokątna oznaczona jako c.W celu pobrania wartości wykonania mozemy wykorzstac prompt.utwórz kod pobierający od użytkownika te wartości.Następnie oblicz sumę ich kwdratów a później znajdź jej pierwiastek wkadratowy.Wynik obliczen powinien zostac wyswietlony wkonssoli.

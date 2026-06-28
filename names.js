@@ -1,25 +1,16 @@
-let str = "witaj!";
-let nr = 7;
-let bigNr = 12345678901234n;
-let Bool = true;
-let sym = Symbol("unikatowy");
-let undef = undefined;
-let unknow = null;
+// Import modułu do pobierania danych od użytkownika w node
+const readlineSync = require('readline-sync');
 
-console.log("str", typeof str);
-console.log("nr", typeof nr);
-console.log("bigNr", typeof bigNr);
-console.log("bool", typeof bool);
-console.log("sym", typeof Symbol);
-console.log("undef", typeof undefined);
-console.log("unknown", typeof null);
+// Etap 1: pobranie wartości przyprostokątnych od użytkownika
+let przyprostokątna1 = readlineSync.question("Podaj długość przyprostokątnej a: ");
+let przyprostokątna2 = readlineSync.question("Podaj długość przyprostokątnej b: ");
 
-let nr1 = 125;
-let nr2 = 60;
-let result1 = 125 / 60;
-console.log(result1);
+// Etap 2: konwersja na liczby (readline-sync, podobnie jak prompt, zwraca tekst!)
+przyprostokątna1 = Number(przyprostokątna1);
+przyprostokątna2 = Number(przyprostokątna2);
 
-let nr3 = 125;
-let nr4 = 60;
-let result2 = 125 % 60;
-console.log(`${nr3} % ${nr4} = ${result2}`);
+// Etap 3: obliczenie przeciwprostokątnej ze wzoru Pitagorasa (a² + b² = c²  →  c = √(a² + b²))
+let przeciwprostokątna = Math.sqrt(przyprostokątna1 ** 2 + przyprostokątna2 ** 2);
+
+// Etap 4: wyświetlenie wyniku
+console.log(`Przeciwprostokątna wynosi: ${przeciwprostokątna}`);
