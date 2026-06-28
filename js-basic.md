@@ -816,3 +816,53 @@ console.log(ressult1, result 2);
 
 powyższy fragmet kodu wygeneruje następujące dane wyjściowe:
 150 NaN
+
+d.) Dzielenie
+To kolejny prosty operator.Iloraz(wynik dzielenia) dwóch wartości liczbowych otrzymujemy po użyciu operatora / .
+Przykłąd:
+let nr1 = 30;
+let nr 2 = 5;;
+let result1 = nr1 / nr2;
+console.log(result1);
+
+Iloraz przy tym fragmencie kodu wyniesie :
+6
+
+e.) Potęgowanie
+podniesienie określonej wartości bazowej do  podanej potęgi np. x ** y(dwie gwiazki w js symbolizują potęgę) gdzie oznacza to ,że x jest podnieisone do potęgi y a także ,że x będzie mnożone y razy przez samą siebie.
+przykłąd potęgowania w jaVaScripcie:
+let nr1 = 2;
+let nr2 = 3;
+let result1 = nr1 ** nr2;
+console.log(result1);
+Jeśli wystzskow pisane prawidłowo w konsoli będzie wynik : 8
+
+f.) Reszta z dzielenia
+Ta operacja wymaga wyjaśnień.
+Reszta z dzielnia to działanie które ma an celu obliczenie ile zostało po dzieleniu całkowitym dwóch liczb i nie ma znaczenia ile razy jedna liczba zmieści sie w drugiej.Ważna jest reszta ,która pozostaą po dzielniu tych  liczb.Operator reszty z dzilenia symbolizuje znak %.
+Ponizej kila przykłądow takiej operacji:
+let nr1 = 10;
+let nr2 = 3;
+let result1 = nr1 % Nr2;
+console.log(`${nr1} % ${nr2} = ${result1}`);
+
+let nr3 = 8;
+let nr4 = 2;
+let result2 = nr3 % nr4;
+console.log(`${nr3} % ${nr4} = ${result2}`); 
+
+let nr5 = 15;
+let nr6 = 4;
+let result3 = nr5 % nr6;
+console.log(`${nr5} % ${nr6} = $(result3)`);
+
+zostaną wygenerowane następujące wyniki:
+10 % 3 = 1
+8 % 2=0
+15% 4 = 3;
+
+Tego rodzaju opracje automatycznei przeprowadza się wpamięci.Powiedzmy,że ktoś poprosi cię o dodanie 125 minut do bieżącej godziny to najprawdopodobiej przerprowadzisz dwie operacje.Pierwsza to dzielenie całkowite w celu ustalenia ile pełnych godzin mieści się w 125 munutach.Druga to rzeczywiste ustalenie reszty   z dzielenia danych 125 przez 60 minut odpowiadających pełnej godzinie(w JavaScript zapiszemy to w postaci 125 %60).W ten sposób zostanie sutalone ,że w 125 minutach mieszczą się dwie pełne godziny i pozostaje ejszce  5 minut.
+Przykład kodu obliczającego:
+
+
+
