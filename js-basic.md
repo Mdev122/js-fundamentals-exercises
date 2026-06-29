@@ -2,6 +2,11 @@
 
 > Notatki własne, sporządzone w trakcie nauki JavaScript od podstaw. Przykłady kodu testowane samodzielnie w `node`. Błędy i literówki z materiałów źródłowych zostały poprawione, a niejasne fragmenty doprecyzowane na podstawie własnych testów i analizy.
 
+**Spis treści:**
+- **Część I** — Podstawy JavaScript (zmienne, `let`/`var`/`const`, proste typy danych, konwersja typów)
+- **Część II** — Operatory (arytmetyczne, jednoargumentowe, prefix/postfix, łączenie, przypisania, porównania, większy/mniejszy, logiczne)
+- **Część III** — Projekty i sprawdzian umiejętności
+
 ---
 
 # I. Podstawy JavaScript
@@ -1173,6 +1178,516 @@ Przy przepisywaniu i testowaniu tych sekcji wystąpiło kilka powtarzających si
 
 ---
 
+## j) Operatory przypisania
+
+Zetknęliśmy się już z nimi podczas przypisywania wartości zmiennym. Podstawowy operator przypisania to znak `=`, ale dostępne są również inne.
+
+Każdy binarny operator arytmetyczny ma odpowiadający mu **operator przypisania**, pozwalający na stworzenie krótszego kodu.
+
+**Przykład:**
+```javascript
+x += 5;   // oznacza: x = x + 5
+x **= 3;  // oznacza: x = x ** 3
+```
+
+### Operator przypisania dodawania (`+=`)
+
+```javascript
+let x = 2;
+x += 2;
+console.log(x);
+```
+
+Po wykonaniu tej operacji wartość `x` będzie wynosić `4`, bo `x += 2` to dokładnie to samo co `x = x + 2`.
+
+### Operator przypisania odejmowania (`-=`)
+
+```javascript
+let x = 4;
+x -= 2;
+console.log(x);
+```
+
+W trakcie tej operacji przypisania odejmowana jest wartość `2`, czyli `x = x - 2`. Wynik: `2`.
+
+### Operator przypisania mnożenia (`*=`)
+
+```javascript
+let x = 2;
+x *= 6;
+console.log(x);
+```
+
+Wartość `x` zostanie pomnożona przez `6` — gdy wartością `x` jest `2`, da to wynik `12`, z rozpisem `x = x * 6`.
+
+### Operator przypisania dzielenia (`/=`)
+
+```javascript
+let x = 12;
+x /= 3;
+console.log(x);
+```
+
+Co normalnie wyglądałoby jako `x = x / 3`. Wynik: `4`.
+
+### Operator przypisania potęgowania (`**=`)
+
+```javascript
+let x = 4;
+x **= 2;
+console.log(x);
+```
+
+Co odpowiada `x = x ** 2`. Wynik: `16`.
+
+### Operator przypisania reszty z dzielenia (`%=`)
+
+```javascript
+let x = 16;
+x %= 3;
+console.log(x);
+```
+
+Co odpowiada `x = x % 3`. Wynik: `1`.
+
+### Zbiorcza tabela operatorów przypisania
+
+| Operator | Przykład | Rozpisane jako |
+|---|---|---|
+| `+=` | `x += 5` | `x = x + 5` |
+| `-=` | `x -= 5` | `x = x - 5` |
+| `*=` | `x *= 5` | `x = x * 5` |
+| `/=` | `x /= 5` | `x = x / 5` |
+| `**=` | `x **= 5` | `x = x ** 5` |
+| `%=` | `x %= 5` | `x = x % 5` |
+
+> **Ćwiczenie praktyczne:** Utwórz zmienne dla trzech liczb `a`, `b` i `c`. Uaktualnij te zmienne za pomocą następujących działań, używając do tego operatorów przypisania:
+> - dodaj wartości `b` i `a`
+> - podziel wartość `a` przez `c`
+> - zastąp wartość `c` resztą z dzielenia liczb `c` i `b`
+>
+> Wyświetl wszystkie liczby w konsoli.
+
+---
+
+## k) Operatory porównania
+
+Operatory porównania różnią się od reszty operatorów — wynikiem ich działania jest zawsze wartość boolowska (`true` albo `false`).
+
+### Równość
+
+Jest kilka operatorów równości, przeznaczonych do ustalenia, czy dwie wartości są równe. Operatory te występują w dwóch wersjach:
+- sprawdzającej jedynie **równość wartości**,
+- sprawdzającej **równość wartości i typu danych**.
+
+Pierwsza wersja operatora zwraca wartość `true`, gdy oba operandy są równe, nawet jeśli ich typy są odmienne. Druga wersja zwraca wartość `true` tylko wtedy, gdy zarówno wartość, jak i typ danych są równe.
+
+**Operator `==` (luźna równość) — sprawdza tylko wartość, nie typ danych:**
+
+```javascript
+let x = 5;
+let y = "5";
+console.log(x == y);
+```
+
+Oba operandy mają wartość `5`, więc w konsoli zostaje wyświetlona wartość:
+
+```
+true
+```
+
+**Operator `===` (ścisła równość) — sprawdza wartość ORAZ typ danych:**
+
+```javascript
+console.log(x === y);
+```
+
+Aby uzyskać wynik `true` przy tym operatorze, zarówno wartość, jak i typ danych operandów muszą być takie same. W omawianym przykładzie tak nie jest (`x` to `Number`, `y` to `String`), dlatego to polecenie wyświetli w konsoli wartość:
+
+```
+false
+```
+
+> Operator `===` najczęściej używa się, gdy zachodzi potrzeba sprawdzenia pod kątem **faktycznej** równości — tylko on jednoznacznie wskazuje, czy obie porównywane zmienne są dokładnie takie same (wartość i typ).
+
+### Nierówność
+
+Nierówność jest podobna do równości, ale działa w odwrotny sposób — operator zwraca wartość `true`, jeśli dwie zmienne **są różne**; w przeciwnym razie wartością zwrotną będzie `false`.
+
+**Operator `!=` (luźna nierówność):**
+
+```javascript
+let x = 5;
+let y = "5";
+console.log(x != y);
+```
+
+W tym wypadku wyświetli się wartość:
+
+```
+false
+```
+
+(bo `x` i `y` mają tę samą wartość `5`, tylko różny typ — a `!=` sprawdza **tylko** wartość, ignorując typ).
+
+**Operator `!==` (ścisła nierówność) — sprawdza wartość ORAZ typ danych:**
+
+```javascript
+console.log(x !== y);
+```
+
+Jeśli `x` i `y` mają różne typy danych (nawet przy tej samej wartości), nie są uznane za "ściśle takie same", więc operator nierówności ścisłej wyświetli w konsoli:
+
+```
+true
+```
+
+### Zbiorcza tabela operatorów równości/nierówności
+
+| Operator | Nazwa | Sprawdza |
+|---|---|---|
+| `==` | luźna równość | tylko wartość |
+| `===` | ścisła równość | wartość i typ |
+| `!=` | luźna nierówność | tylko wartość |
+| `!==` | ścisła nierówność | wartość i typ |
+
+---
+
+## l) Operatory większy niż / mniejszy niż
+
+**Operator większy niż (`>`)** daje wartość `true`, jeśli operand po lewej stronie jest większy niż operand po prawej stronie.
+
+**Operator mniejszy niż (`<`)** daje wartość `true`, jeśli operand po lewej stronie jest mniejszy od operandu po prawej stronie.
+
+Oprócz tych dwóch, rozróżniamy jeszcze **większy bądź równy** (`>=`) oraz **mniejszy bądź równy** (`<=`).
+
+**Przykłady zastosowania:**
+
+```javascript
+let x = 5;
+let y = 6;
+
+console.log(y > x);
+```
+Konsola wygeneruje wartość `true`, ponieważ wartość zmiennej `y` jest większa niż wartość zmiennej `x`.
+
+```javascript
+console.log(x > y);
+```
+Wartość zmiennej `x` nie jest większa od wartości zmiennej `y`, więc wynikiem będzie `false`.
+
+```javascript
+console.log(y > y);
+```
+Wartość wygenerowana to `false` — `y` nie jest większe niż `y` (samo od siebie).
+
+```javascript
+console.log(y >= y);
+```
+To polecenie sprawdzi, czy wartość zmiennej `y` jest większa **bądź równa** zmiennej `y` — a ponieważ zmienna `y` jest równa sobie, mamy wynik `true` w konsoli.
+
+**Do samodzielnego sprawdzenia (analogicznie, z operatorem `<` i `<=`):**
+
+```javascript
+console.log(y < x);
+console.log(x < y);
+console.log(y < y);
+console.log(y <= y);
+```
+
+| Wyrażenie | Wynik | Wyjaśnienie |
+|---|---|---|
+| `y > x` | `true` | `6 > 5` |
+| `x > y` | `false` | `5 > 6` |
+| `y > y` | `false` | `6 > 6` (nie jest większe od samego siebie) |
+| `y >= y` | `true` | `6 >= 6` (równe, więc spełnia "bądź równy") |
+| `y < x` | `false` | `6 < 5` |
+| `x < y` | `true` | `5 < 6` |
+| `y < y` | `false` | `6 < 6` |
+| `y <= y` | `true` | `6 <= 6` |
+
+---
+
+## m) Operatory logiczne
+
+W przypadku, gdy chcemy jednocześnie sprawdzić dwa warunki bądź zanegować warunek, pomocne są operatory logiczne. Do dyspozycji mamy operatory logiczne **i** (`&&`), **lub** (`||`) oraz **nie** (`!`).
+
+### Logiczne i (`&&`)
+
+Jeśli chcemy sprawdzić, czy zmienna `x` jest mniejsza niż `y` **oraz** czy zmienna `y` jest mniejsza niż `z`, musimy połączyć dwa wyrażenia. Możemy to wykonać za pomocą operatora `&&`. Jego wartość zwrotna to `true`, ale tylko wtedy, jeśli **oba** wyrażenia przyjmują wartość `true`.
+
+```javascript
+let x = 1;
+let y = 2;
+let z = 3;
+console.log(x < y && y < z);
+```
+
+Wynikiem wykonania tego polecenia jest wartość:
+
+```
+true
+```
+
+Odczytujemy to w taki sposób: jeśli `x` jest mniejsze niż `y` **i** `y` jest mniejsze od `z`, wyrażenie jest prawdziwe i mamy wartość `true`.
+
+```javascript
+console.log(x > y && y < z);
+```
+
+Pierwsza część wyrażenia (`x > y`, czyli `1 > 2`) nie spełnia wartości `true`, więc całe wyrażenie będzie fałszywe:
+
+```
+false
+```
+
+### Operator logiczny lub (`||`)
+
+Jeżeli chcemy otrzymać wartość `true`, gdy **jedno** ze sprawdzanych wyrażeń jest prawdziwe, skorzystamy z operatora logicznego "lub". Operator ten zapisujemy jako `||`. Sprawdza on, czy którykolwiek ze sprawdzanych operandów przyjmuje wartość `true` — i jeśli tak, całe wyrażenie jest prawdziwe.
+
+```javascript
+console.log(x > y || y < z);
+```
+
+To polecenie wyświetli wartość `true` (mimo że `x > y` to `false`, drugi warunek `y < z` to `true`, a dla `||` wystarczy jeden prawdziwy warunek):
+
+```
+true
+```
+
+> Dla porównania: poprzedni operator (`&&`) w tym samym przykładzie (`x > y && y < z`) wyświetliłby `false`, bo `&&` wymaga, żeby **oba** warunki były prawdziwe — a tu tylko jeden jest.
+
+Jeśli **oba** operandy przyjmują wartość `false`, wynikiem będzie `false`:
+
+```javascript
+console.log(x > y || y > z);
+```
+
+```
+false
+```
+
+(bo `1 > 2` to `false`, i `2 > 3` to też `false` — żaden warunek nie jest prawdziwy).
+
+### Logiczne nie (`!`)
+
+Są sytuacje, w których zachodzi potrzeba **negacji** wartości boolowskiej, aby otrzymać wartość przeciwną. Do tego celu można użyć wykrzyknika, który oznacza "nie".
+
+```javascript
+let x = false;
+console.log(!x);
+```
+
+Zostanie wyświetlona wartość `true`, bo wartość boolowska uległa zmianie na przeciwną.
+
+Możemy również dokonać negacji **wyrażenia**, którego wynikiem jest wartość boolowska. Wtedy musimy się upewnić co do wartości całego wyrażenia i stosujemy tu **grupowanie** (nawias okrągły):
+
+```javascript
+let x = 1;
+let y = 2;
+console.log(!(x < y));
+```
+
+`x` jest mniejsze niż `y`, więc `(x < y)` zawiera wartość `true` — ale `!` przed nawiasem zmienia tę wartość na przeciwną, więc wygeneruje się wynik:
+
+```
+false
+```
+
+> **Uwaga na nawiasy:** `!(x < y)` (negacja całego wyrażenia) i `!x < y` (negacja tylko `x`, a potem porównanie) to **dwie różne rzeczy** — bez nawiasu `!` zadziałałby tylko na `x`, nie na cały wynik porównania. Grupowanie `(...)` jest tu kluczowe.
+
+### Zbiorcza tabela operatorów logicznych
+
+| Operator | Nazwa | Zwraca `true`, gdy... |
+|---|---|---|
+| `&&` | i (AND) | **oba** warunki są prawdziwe |
+| `\|\|` | lub (OR) | **co najmniej jeden** warunek jest prawdziwy |
+| `!` | nie (NOT) | odwraca wartość boolowską (`true` → `false`, `false` → `true`) |
+
+---
+
+# III. Projekty i sprawdzian umiejętności
+
+## Projekt 1 — Konwerter mil na kilometry
+
+**Treść zadania:** Utwórz zmienną przechowującą wartość wyrażoną w milach, skonwertuj ją na kilometry, a następnie w konsoli wyświetl tę wartość w formacie: *"Odległość 130 mil odpowiada 209.2142 kilometra"* (wskazówka: 1 mila to 1.60934 kilometra).
+
+### Rozwiązanie
+
+```javascript
+let mile = 130;
+let kilometry = mile * 1.60934;
+
+console.log(`Odległość ${mile} mil odpowiada ${kilometry} kilometra`);
+```
+
+**Wynik:**
+```
+Odległość 130 mil odpowiada 209.2142 kilometra
+```
+
+---
+
+## Projekt 2 — Kalkulator BMI
+
+**Treść zadania:** Zdefiniuj wzrost w calach i wagę w funtach, skonwertuj te wartości na centymetry i kilogramy, a następnie wyświetl wynik w konsoli.
+
+> Stałe przeliczeniowe: 1 cal = 2.54 cm, 1 funt = 0.453592 kg.
+
+### Rozwiązanie
+
+```javascript
+let wzrostCale = 70;
+let wagaFunty = 180;
+
+let wzrostCm = wzrostCale * 2.54;
+let wagaKg = wagaFunty * 0.453592;
+
+console.log(`Wzrost: ${wzrostCm} cm`);
+console.log(`Waga: ${wagaKg} kg`);
+```
+
+**Przykładowy wynik** (dla 70 cali i 180 funtów):
+```
+Wzrost: 177.8 cm
+Waga: 81.64656 kg
+```
+
+> **Uwaga:** to zadanie nazywa się "Kalkulator BMI", ale w obecnej treści kończy się na samej **konwersji jednostek** (cale → cm, funty → kg). Pełny kalkulator BMI wymagałby dodatkowo wzoru `BMI = waga(kg) / (wzrost(m))²` — to dobry kandydat na rozszerzenie tego zadania, gdy w materiałach pojawi się więcej kontekstu, czy o to chodziło.
+
+---
+
+## Sprawdzian umiejętności
+
+> Pytania do samodzielnego rozwiązania — najpierw spróbować odpowiedzieć "na papierze", a potem zweryfikować w `node`. Pod każdym pytaniem odpowiedź jest zwinięta w cytat, żeby nie "zdradzić" jej przy pierwszym czytaniu.
+
+**1. Jakiego typu danych jest ta zmienna?**
+```javascript
+const c = "5";
+```
+> Odpowiedź: `string` — wartość jest w cudzysłowie, więc niezależnie od tego, że "wygląda" jak liczba, jest to tekst.
+
+**2. Jakiego typu danych jest ta zmienna?**
+```javascript
+const c = 91;
+```
+> Odpowiedź: `number` — wartość zapisana bez cudzysłowu/apostrofów/backticków.
+
+**3. Który z tych wierszy jest lepszy — pierwszy czy drugi?**
+```javascript
+let empty1 = undefined; // wiersz pierwszy
+let empty2 = null;      // wiersz drugi
+```
+> Odpowiedź: **drugi** (`null`). Jawne przypisanie `undefined` jest złą praktyką (patrz sekcja 10 i 11 w Części I) — `null` lepiej komunikuje intencję "ta zmienna jest celowo pusta", a unika problemu z nieumyślnym `===` między "przypadkowo niezainicjowaną" a "jawnie undefined" zmienną.
+
+**4. Jakie dane wyjściowe zostaną wyświetlone w konsoli?**
+```javascript
+let a = "Witaj,";
+a = "świecie";
+console.log(a);
+```
+> Odpowiedź: `świecie` — zmienną `a` nadpisano nową wartością, więc wyświetli się tylko ta druga, ostateczna wartość.
+
+**5. Jakie dane wyjściowe wyświetlą się w konsoli?**
+```javascript
+let a = "świecie";
+let b = "Witaj, ${a}!";
+console.log(b);
+```
+> Odpowiedź: `Witaj, ${a}!` — **dosłownie**, ze znakami `${a}` widocznymi w tekście! To pułapka: string `b` jest zapisany w **cudzysłowie** (`" "`), nie w backtickach (`` ` ``), więc składnia `${...}` **nie działa** — jest traktowana jako zwykły tekst, a nie jako wstawienie wartości zmiennej. Żeby to zadziałało zgodnie z intencją, trzeba by użyć: ``let b = `Witaj, ${a}!`;``
+
+**6. Jaka jest wartość zmiennej `a`?**
+```javascript
+let a = "Witaj,";
+a = prompt("świecie");
+console.log(a);
+```
+> Odpowiedź: zależy od tego, co użytkownik wpisze w okienku `prompt()` — `a` zostaje nadpisane tym, co użytkownik wpisał (jako tekst). Przypomnienie: `prompt()` działa tylko w przeglądarce, nie w `node` (patrz sekcja o zadaniu z Pitagorasem w Części II).
+
+**7. Jaka wartość zmiennej `b` zostanie wyświetlona w konsoli?**
+```javascript
+let a = 5;
+let b = 70;
+let c = "5";
+b++;
+console.log(b);
+```
+> Odpowiedź: `71` — `b++` zwiększa `b` o 1 (`70 + 1`). Zmienne `a` i `c` nie mają tu żadnego wpływu, są tylko "rozpraszaczem" w pytaniu.
+
+**8. Jaka jest wartość zmiennej `result`?**
+```javascript
+let result = 3 + 4 * 2 / 8;
+```
+> Odpowiedź: `4`. Priorytet operatorów: najpierw `*` i `/` (od lewej do prawej, bo są równorzędne): `4 * 2 = 8`, potem `8 / 8 = 1`. Na końcu dodawanie: `3 + 1 = 4`.
+
+**9. Jaka jest wartość zmiennych `total` i `total2`?**
+```javascript
+let firstNum = 5;
+let secondNum = 10;
+firstNum++;
+secondNum--;
+let total = ++firstNum + secondNum;
+console.log(total);
+let total2 = 500 + 100 / 5 + total--;
+console.log(total2);
+```
+> Odpowiedź: `total = 16`, `total2 = 536`.
+> Rozbiórka: `firstNum++` → `firstNum = 6`. `secondNum--` → `secondNum = 9`. `++firstNum` → `firstNum = 7`, zwraca `7`. `total = 7 + 9 = 16`.
+> Dla `total2`: najpierw `100 / 5 = 20` (priorytet dzielenia). `total--` (postfix) zwraca **starą** wartość `total`, czyli `16` (a `total` zostaje zmienione na `15`, ale to nie ma już wpływu na `total2`). Czyli `total2 = 500 + 20 + 16 = 536`.
+
+**10. Jakie wartości zostaną wyświetlone w konsoli przez ten fragment kodu?**
+
+> W oryginalnej wersji notatek ten fragment zawierał kilka błędów składniowych, które uniemożliwiały uruchomienie kodu — zostały poprawione poniżej (oryginał: brak nawiasu i kropki w jednej linii `console log(...)`, wielka litera w `False`, oraz pojedynczy `=` zamiast `==` w ostatniej linii, co byłoby próbą przypisania wewnątrz `console.log` i samo w sobie zwróciłoby błąd).
+
+```javascript
+const a = 5;
+const b = 10;
+console.log(a > 0 && b > 0);
+console.log(a == 5 && b == 4);
+console.log(true || false);
+console.log(a == 3 || b == 10);
+console.log(a == 3 || b == 11);
+```
+
+> Odpowiedzi:
+> - `a > 0 && b > 0` → `true` (oba warunki prawdziwe)
+> - `a == 5 && b == 4` → `false` (drugi warunek nieprawdziwy: `b` to `10`, nie `4`)
+> - `true || false` → `true` (wystarczy jeden prawdziwy warunek dla `||`)
+> - `a == 3 || b == 10` → `true` (pierwszy warunek nieprawdziwy, ale drugi — `b == 10` — prawdziwy)
+> - `a == 3 || b == 11` → `false` (oba warunki nieprawdziwe)
+
+---
+
+## Najczęstsze błędy znalezione w tej części notatek (operatory przypisania, porównania, logiczne)
+
+| Typ błędu | Przykład błędny | Poprawka | Skutek błędu |
+|---|---|---|---|
+| Zbędny znak `>` przed zamykającym nawiasem | `console.log(x > y \|\| y < z>);` | `console.log(x > y \|\| y < z);` | `SyntaxError: Unexpected token` |
+| Brak nawiasu i kropki w `console.log` | `console log(true \|\| False);` | `console.log(true \|\| false);` | `SyntaxError` (brak nawiasu) + `ReferenceError: False is not defined` (JS rozróżnia wielkość liter — `false` to słowo kluczowe, `False` to nieistniejąca zmienna) |
+| Pojedynczy `=` zamiast `==` w porównaniu | `console.log(a == 3 \|\| b = 10);` | `console.log(a == 3 \|\| b == 10);` | To nie błąd składni, ale **błąd logiczny** — `b = 10` to **przypisanie** (nadpisuje `b` na `10` i zwraca `10`, co jest "prawdziwe" dla `\|\|`), a nie porównanie. Bardzo łatwa do przeoczenia pułapka: jeden znak `=` zamiast dwóch zmienia całe znaczenie linii. |
+| Duplikat liter sekcji w numeracji notatek | dwa razy `h)` i `i)` w oryginalnych notatkach | ciągła numeracja: `j) przypisania`, `k) porównania`, `l) większy/mniejszy`, `m) logiczne` | nie wpływa na działanie kodu, ale utrudnia odnajdywanie się w dokumentacji |
+
+**Wniosek:** błąd `b = 10` zamiast `b == 10` to jeden z najbardziej "podstępnych" błędów w JavaScript — kod **się uruchamia**, nie ma żadnego komunikatu błędu, ale wynik jest zupełnie inny niż zamierzony. To dobry argument za tym, żeby **zawsze** dokładnie sprawdzać, czy w porównaniu jest `==`/`===`, a nie pojedynczy `=`.
+
+---
+
+## Do przećwiczenia — Operatory przypisania, porównania, logiczne
+
+- [ ] Wykonać ćwiczenie praktyczne z operatorami przypisania (zmienne `a`, `b`, `c` — dodawanie, dzielenie, reszta z dzielenia)
+- [ ] Sprawdzić różnicę `==` vs `===` dla par: `5` i `"5"`, `0` i `false`, `null` i `undefined`
+- [ ] Sprawdzić różnicę `!=` vs `!==` na tych samych parach co powyżej
+- [ ] Przetestować wszystkie warianty z `>`, `<`, `>=`, `<=` na własnych przykładowych liczbach
+- [ ] Napisać własny przykład z `&&`, gdzie jeden warunek jest prawdziwy a drugi fałszywy — zweryfikować, że całość daje `false`
+- [ ] Napisać własny przykład z `||`, gdzie oba warunki są fałszywe — zweryfikować, że całość daje `false`
+- [ ] Przetestować `!` na zmiennej boolowskiej i na całym wyrażeniu w nawiasie (`!(x < y)`) — porównać z `!x < y` (bez nawiasu) i zobaczyć różnicę
+- [ ] Rozwiązać Projekt 1 (konwerter mil na km) dla kilku różnych wartości mil
+- [ ] Rozwiązać Projekt 2 (konwersja cale/funty → cm/kg) i ewentualnie rozszerzyć o właściwy wzór BMI
+- [ ] Rozwiązać cały sprawdzian umiejętności samodzielnie w `node`, **zanim** zerknie się do odpowiedzi w notatkach
+- [ ] Znaleźć i zrozumieć pułapkę z pytania 10 (`b = 10` vs `b == 10`) — napisać własny przykład tego błędu i zobaczyć, jak "po cichu" zmienia wynik
+
+---
+
 ## Pytania / niejasności
 
 - *(miejsce na rzeczy, które chcę jeszcze dopytać)*
+- Projekt 2 nazywa się "Kalkulator BMI", ale treść zadania nie wspomina o samym wzorze BMI — czy to ma być tylko etap konwersji jednostek, czy w pełnej wersji zadania chodzi też o obliczenie wskaźnika BMI?
