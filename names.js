@@ -1,14 +1,7 @@
+let Imię = "Kasia"
+let wiek = 20;
+let jestMłoda = true;
 
 
-//* ćwiczenie drugie zasieg let var w bloku if **//
-
-
-
-
-if (true) {
-  var zmiennaVar = "jestem z var";
-  let zmiennaLet = "jestem z let";
-}
-
-console.log(zmiennaVar);
-console.log(zmiennaLet);
+let opis = `${Imię} ma ${wiek} lat i: ${jestMłoda}`;
+console.log(opis);

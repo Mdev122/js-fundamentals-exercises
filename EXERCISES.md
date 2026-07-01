@@ -11,7 +11,7 @@
 
 - [x] 01. Zadeklarować tę samą zmienną przez `let` i przez `const`, porównać błędy przy próbie redeklaracji/zmiany wartości.
 - [x] 02. Sprawdzić w konsoli różnicę zasięgu `let` vs `var` w bloku `if {}`
-- [ ] 03. Napisać własny przykład z template literal (`` ` ``) i kilkoma zmiennymi naraz
+- [x] 03. Napisać własny przykład z template literal (`` ` ``) i kilkoma zmiennymi naraz
 
 ### Stringi i znaki sterujące
 
