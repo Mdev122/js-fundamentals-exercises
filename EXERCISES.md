@@ -15,7 +15,7 @@
 
 ### Stringi i znaki sterujące
 
-- [ ] 04. Napisać string zawierający jednocześnie cudzysłów i apostrof, używając `\"` do escapowania
+- [x] 04. Napisać string zawierający jednocześnie cudzysłów i apostrof, używając `\"` do escapowania
 
 ### Number / BigInt
 
