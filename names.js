@@ -1,14 +1,14 @@
-//*Cwiczenie pierwsze *//
 
-let temperatura = 20;
-temperatura = 25;
-console.log(temperatura);
 
-const upał = 40;
-upał = 42;
-console.log(upał);
+//* ćwiczenie drugie zasieg let var w bloku if **//
 
 
 
 
+if (true) {
+  var zmiennaVar = "jestem z var";
+  let zmiennaLet = "jestem z let";
+}
 
+console.log(zmiennaVar);
+console.log(zmiennaLet);
