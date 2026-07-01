@@ -1,4 +1,5 @@
-let liczba = 10;
-let bigNumber = 20n;
+let dziesietna = 12;
+let binarna = 0b1100;
+let szesnastkowa = 0xC;
 
-console.log(liczba + bigNumber); //* tych wartości nie woolnołaczyć *//
+console.log(dziesietna, binarna, szesnastkowa);

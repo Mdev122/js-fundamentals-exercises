@@ -21,7 +21,7 @@
 
 - [x] 05. Sprawdzić w konsoli `console.log(Number.MAX_SAFE_INTEGER)` i `Number.MIN_SAFE_INTEGER`
 - [x] 06. Spróbować dodać do siebie wartość `Number` i `BigInt` bez konwersji — zobaczyć błąd na własne oczy
-- [ ] 07. Zapisać tę samą liczbę w postaci dziesiętnej, binarnej (`0b`) i szesnastkowej (`0x`), porównać w konsoli
+- [x] 07. Zapisać tę samą liczbę w postaci dziesiętnej, binarnej (`0b`) i szesnastkowej (`0x`), porównać w konsoli
 
 ### Typy specjalne — `null`, `undefined`, `Symbol`
 
