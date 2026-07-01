@@ -1,0 +1,22 @@
+{
+  "name": "js-fundamentals-exercises",
+  "version": "1.0.0",
+  "description": "This repo will be used to learn js",
+  "main": "names.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node names.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mdev122/js-fundamentals-exercises.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Mdev122/js-fundamentals-exercises/issues"
+  },
+  "homepage": "https://github.com/Mdev122/js-fundamentals-exercises#readme"
+}
